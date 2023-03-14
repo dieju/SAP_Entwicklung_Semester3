@@ -46,11 +46,6 @@ annotate view ZJDMATF_C_Videogame with
   @UI.selectionField: [{ position: 50 }]
   @UI.identification: [{ position: 50 }]
   PublishingYear;
-
-  /*@UI.lineItem: [{ position: 60 }]
-  @UI.selectionField: [{ position: 60 }]
-  @UI.identification: [{ position: 60 }]
-  AverageRating;*/
   
   @UI.lineItem: [{ position: 60 }]
   @UI.selectionField: [{ position: 60 }]

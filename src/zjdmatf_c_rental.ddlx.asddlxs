@@ -36,33 +36,29 @@ annotate view ZJDMATF_C_Rental
     @EndUserText.label: 'Customer'
     CustomerUuid;
     
-    //@UI.lineItem: [{ position: 30 }]
-    //@UI.identification: [{ position: 30 }]
-    //ItemId;
+    @UI.lineItem: [{ position: 30 }]
+    @UI.selectionField: [{ position: 30 }]
+    @UI.identification: [{ position: 30 }]
+    StartDate;
     
     @UI.lineItem: [{ position: 40 }]
     @UI.selectionField: [{ position: 40 }]
     @UI.identification: [{ position: 40 }]
-    StartDate;
-    
-    @UI.lineItem: [{ position: 50 }] // Criticality ReturnDate
-    @UI.selectionField: [{ position: 50 }]
-    @UI.identification: [{ position: 50 }]
     ReturnDate;
     
-    @UI.lineItem: [{ position: 60 }]
-    @UI.identification: [{ position: 60 }]
+    @UI.lineItem: [{ position: 50 }]
+    @UI.identification: [{ position: 50 }]
     RentalCharge;
+    
+    @UI.lineItem: [{ position: 60, criticality: 'RentalStatusCriticality'}] // , criticalityRepresentation: #WITHOUT_ICON
+    @UI.identification: [{ position: 60 }]
+    RentalStatus;
     
     @UI.lineItem: [{ position: 70 }]
     @UI.identification: [{ position: 70 }]
     Rating;
     
-    //@UI.hidden: true
-    //ReturnDateCriticality;
+    @UI.hidden: true
+    RentalStatusCriticality;
     
-    /* Muss auskommentiert sein, da es jetzt eingeblendet werden soll
-    Beim Erstellen eines neuen Verleihvorgangs soll die Währung auch ausgewählt werden können*/
-    //@UI.hidden: true
-    //CukyField;
 }

@@ -15,11 +15,15 @@ authorization master ( instance )
 
   /* Field Controls */
   field ( readonly, numbering : managed ) VideogameUuid;
-  field ( readonly ) ItemId, AverageRatingCalculated;
-  field ( mandatory: create ) Title, PublishingYear, GameSystem, Genre, Status;
+  field ( readonly ) ItemId, AverageRatingCalculated, Status;
+  field ( mandatory: create ) Title, PublishingYear, GameSystem, Genre;
 
   /* Actions, Validations and Determinations */
   determination determineItemId on save { create; }
+  determination determineStatus on save { create; }
+  validation validatePublishingYear on save { create; update; field PublishingYear; }
+  validation validateGenre on save { create; update; field Genre; }
+  validation validateGameSystem on save { create; update; field GameSystem; }
 
   mapping for zjdmatfvideogame corresponding
   {
@@ -29,7 +33,6 @@ authorization master ( instance )
       Title = title;
       GameSystem = game_system;
       PublishingYear = publishing_year;
-      AverageRatingCalculated = average_rating;
       Status = status;
   }
 
@@ -52,13 +55,18 @@ authorization dependent by _Videogame
 
   /* Field Controls */
   field ( readonly, numbering : managed ) RentalUuid;
-  field ( readonly ) ProcessNumber, StartDate, ReturnDate, RentalCharge;
-  field ( mandatory: create) CustomerUuid;
+  field ( readonly) ProcessNumber, StartDate, ReturnDate, RentalCharge, CukyField, RentalStatus;
+  field ( readonly: update) CustomerUuid;
+  field ( mandatory: create) CustomerUuid, Rating;
 
   /* Actions, Validations and Determinations */
   determination determineProcessNumber on save { create; }
   determination determineStartDate on save { create; }
   determination determineStatus on save { create; }
+  determination determineRating on save { create; }
+  validation validateRating on save { create; update; field Rating; }
+  validation validateRentalRequest on save { create; }
+
 
   /* Mapping */
   mapping for zjdmatfrental corresponding
@@ -72,5 +80,6 @@ authorization dependent by _Videogame
       RentalCharge = rental_charge;
       CukyField = cuky_field;
       Rating = rating;
+      RentalStatus = rental_status;
   }
 }

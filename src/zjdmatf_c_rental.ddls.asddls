@@ -16,10 +16,12 @@ define view entity ZJDMATF_C_Rental
       CukyField,
       @Consumption.valueHelpDefinition: [{ entity: { name: 'ZJDMATF_I_CRATINGVH', element: 'Rating' } }]
       Rating,
+      @Consumption.valueHelpDefinition: [{ entity: { name: 'ZJDMATF_I_RENTALSTATUSVH', element: 'RentalStatus' } }]
+      RentalStatus,
       //_Videogame.ItemId,
       
       /* Transient Data */
-      //ReturnDateCriticality,
+      RentalStatusCriticality,
       CustomerName,
       
       /* Associations */

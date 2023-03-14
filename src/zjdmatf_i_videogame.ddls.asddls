@@ -11,7 +11,6 @@ define root view entity ZJDMATF_I_Videogame
       title           as Title,
       game_system     as GameSystem,
       publishing_year as PublishingYear,
-      //average_rating  as AverageRating,
       status          as Status,
       @EndUserText: { label: 'Image URL', quickInfo: 'Image URL' }
       @Semantics.imageUrl: true

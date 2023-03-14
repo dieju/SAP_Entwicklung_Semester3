@@ -16,7 +16,6 @@ define root view entity ZJDMATF_C_Videogame
       @Consumption.valueHelpDefinition: [{ entity: { name: 'ZJDMATF_I_SYSTEMVH', element: 'GameSystem' } }]
       GameSystem,
       PublishingYear,
-      //AverageRating,
       @Consumption.valueHelpDefinition: [{ entity: { name: 'ZJDMATF_I_STATUSVH', element: 'Status' } }]
       Status,
       AverageRatingCalculated,

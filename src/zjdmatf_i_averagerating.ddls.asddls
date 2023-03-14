@@ -8,6 +8,6 @@ define view entity ZJDMATF_I_AverageRating
       -- rundet auf zwei Nachkommastellen
 } 
 where
-  rating <> ''
+  rating <> 'X' and rating <> ''
 group by
   videogame_uuid

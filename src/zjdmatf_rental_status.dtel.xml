@@ -3,18 +3,18 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DD04V>
-    <ROLLNAME>ZJDMATF_AVERAGE_RATING</ROLLNAME>
+    <ROLLNAME>ZJDMATF_RENTAL_STATUS</ROLLNAME>
     <DDLANGUAGE>E</DDLANGUAGE>
-    <DOMNAME>ZJDMATF_DEC3</DOMNAME>
+    <DOMNAME>ZJDMATF_RENTAL_STATUS</DOMNAME>
     <HEADLEN>55</HEADLEN>
     <SCRLEN1>10</SCRLEN1>
     <SCRLEN2>20</SCRLEN2>
     <SCRLEN3>40</SCRLEN3>
-    <DDTEXT>Average_Rating</DDTEXT>
-    <REPTEXT>Average Rating</REPTEXT>
-    <SCRTEXT_S>Avg Rating</SCRTEXT_S>
-    <SCRTEXT_M>Average Rating</SCRTEXT_M>
-    <SCRTEXT_L>Average Rating</SCRTEXT_L>
+    <DDTEXT>Rental_Status</DDTEXT>
+    <REPTEXT>Rental Status</REPTEXT>
+    <SCRTEXT_S>Status</SCRTEXT_S>
+    <SCRTEXT_M>Rental Status</SCRTEXT_M>
+    <SCRTEXT_L>Rental Status</SCRTEXT_L>
     <DTELMASTER>E</DTELMASTER>
     <REFKIND>D</REFKIND>
     <ABAP_LANGUAGE_VERSION>5</ABAP_LANGUAGE_VERSION>

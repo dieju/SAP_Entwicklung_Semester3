@@ -20,6 +20,42 @@
      <MSGNR>002</MSGNR>
      <TEXT>Videogame with ID &amp;1 successfully returned</TEXT>
     </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZJDMATF_VIDEOGAME</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>This Publishing Year (&amp;1) is invalid</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZJDMATF_VIDEOGAME</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>For creating a videogame the only valid Status is available (A)</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZJDMATF_VIDEOGAME</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>This Videogame Genre (&amp;1) is invalid</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZJDMATF_VIDEOGAME</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>This Videogame System (&amp;1) is invalid</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZJDMATF_VIDEOGAME</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>This Rating (&amp;1) is invalid</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZJDMATF_VIDEOGAME</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Videgame already lend - Rental is not possible</TEXT>
+    </T100>
    </T100>
   </asx:values>
  </asx:abap>

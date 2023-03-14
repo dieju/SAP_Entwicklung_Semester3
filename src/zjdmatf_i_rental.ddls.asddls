@@ -16,13 +16,13 @@ define view entity ZJDMATF_I_Rental
       rental_charge  as RentalCharge,
       cuky_field     as CukyField,
       rating         as Rating,
+      rental_status  as RentalStatus,
       
       /*Transient Data*/
-      //case when dats_days_between($session.user_date, return_date) >= 3 then 2
-      //     when dats_days_between($session.user_date, return_date) >= 0 then 3
-      //     when dats_days_between($session.user_date, return_date) <= 0 then 1
-      //     else 0
-      //end                as ReturnDateCriticality, 
+      case when rental_status = 'A' then 3
+           when rental_status = 'F' then 1
+           else 0
+      end                as RentalStatusCriticality,
       _CustomerText.Name as CustomerName,
       /* Associations */
       _Videogame

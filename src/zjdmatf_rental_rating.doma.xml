@@ -49,6 +49,13 @@
      <DOMVALUE_L>5</DOMVALUE_L>
      <DDTEXT>very satisfied</DDTEXT>
     </DD07V>
+    <DD07V>
+     <DOMNAME>ZJDMATF_RENTAL_RATING</DOMNAME>
+     <VALPOS>0006</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>X</DOMVALUE_L>
+     <DDTEXT>not rated</DDTEXT>
+    </DD07V>
    </DD07V_TAB>
   </asx:values>
  </asx:abap>
