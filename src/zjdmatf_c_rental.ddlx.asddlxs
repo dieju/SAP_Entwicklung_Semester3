@@ -1,0 +1,68 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo:
+{
+  typeNamePlural: 'Rentals',
+  typeName: 'Rental',
+  title.value: 'ProcessNumber'
+  //description.value: 'ProcessNumber'
+}
+@UI.presentationVariant: [{sortOrder: [{ by: 'ReturnDate', direction: #DESC }]}] // absteigend sortiert nach ReturnDate
+annotate view ZJDMATF_C_Rental
+    with 
+{
+
+    /* Facets */
+    @UI.facet: [{ position: 10, type: #IDENTIFICATION_REFERENCE, label: 'Rental Details' }]
+    
+    /* Actions */
+    @UI.lineItem: [{ position: 10, type: #FOR_ACTION, dataAction: 'RETURN_VIDEOGAME', label: 'Return Videogame' }]
+    
+    /* Fields */
+    @UI.hidden: true
+    RentalUuid;
+    
+    @UI.hidden: true
+    VideogameUuid;
+    
+    @UI.lineItem: [{ position: 10 }]
+    @UI.selectionField: [{ position: 10 }]
+    @UI.identification: [{ position: 10 }]
+    ProcessNumber;
+    
+    //@UI.hidden: true
+    @UI.lineItem: [{ position: 20 }]
+    @UI.selectionField: [{ position: 20 }]
+    @UI.identification: [{ position: 20 }]
+    @EndUserText.label: 'Customer'
+    CustomerUuid;
+    
+    //@UI.lineItem: [{ position: 30 }]
+    //@UI.identification: [{ position: 30 }]
+    //ItemId;
+    
+    @UI.lineItem: [{ position: 40 }]
+    @UI.selectionField: [{ position: 40 }]
+    @UI.identification: [{ position: 40 }]
+    StartDate;
+    
+    @UI.lineItem: [{ position: 50 }] // Criticality ReturnDate
+    @UI.selectionField: [{ position: 50 }]
+    @UI.identification: [{ position: 50 }]
+    ReturnDate;
+    
+    @UI.lineItem: [{ position: 60 }]
+    @UI.identification: [{ position: 60 }]
+    RentalCharge;
+    
+    @UI.lineItem: [{ position: 70 }]
+    @UI.identification: [{ position: 70 }]
+    Rating;
+    
+    //@UI.hidden: true
+    //ReturnDateCriticality;
+    
+    /* Muss auskommentiert sein, da es jetzt eingeblendet werden soll
+    Beim Erstellen eines neuen Verleihvorgangs soll die Währung auch ausgewählt werden können*/
+    //@UI.hidden: true
+    //CukyField;
+}

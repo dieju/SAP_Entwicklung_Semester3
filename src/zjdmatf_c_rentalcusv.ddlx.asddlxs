@@ -1,0 +1,76 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo:
+{
+  typeName: 'Rental',
+  typeNamePlural: 'Rentals',
+  title.value: 'ProcessNumber',
+  imageUrl: 'Url'
+//  description.value: 'ProcessNumber'
+}
+@UI.presentationVariant: [{sortOrder: [{ by: 'ReturnDate', direction: #DESC }]}] // absteigend sortiert nach ReturnDate
+annotate view ZJDMATF_C_RENTALCUSV
+    with 
+{
+
+    /* Facets */
+    @UI.facet: [{ position: 10, type: #IDENTIFICATION_REFERENCE, label: 'Rental Details' }]
+    
+    /* Actions */
+    @UI.lineItem: [{ position: 10, type: #FOR_ACTION, dataAction: 'RETURN_VIDEOGAME', label: 'Return Videogame' }]
+    
+    /* Fields */
+    @UI.hidden: true
+    RentalUuid;
+    
+    @UI.hidden: true
+    VideogameUuid;
+    
+    //@UI.hidden: true
+    @UI.lineItem: [{ position: 10 }]
+    @UI.selectionField: [{ position: 10 }]
+    @UI.identification: [{ position: 10 }]
+    ProcessNumber;
+    
+    @UI.lineItem: [{ position: 20 }]
+    @UI.selectionField: [{ position: 20 }]
+    @UI.identification: [{ position: 20 }]
+    @EndUserText.label: 'Customer'
+    CustomerUuid;
+    
+    @UI.lineItem: [{ position: 30 }]
+    @UI.identification: [{ position: 30 }]
+    Title;
+    
+    @UI.lineItem: [{ position: 40 }]
+    @UI.identification: [{ position: 40 }]
+    GameSystem;
+    
+    @UI.lineItem: [{ position: 50 }]
+    @UI.selectionField: [{ position: 50 }]
+    @UI.identification: [{ position: 50 }]
+    StartDate;
+    
+    @UI.lineItem: [{ position: 60 }] // Criticality ReturnDate
+    @UI.selectionField: [{ position: 60 }]
+    @UI.identification: [{ position: 60 }]
+    ReturnDate;
+    
+    @UI.lineItem: [{ position: 70 }]
+    @UI.identification: [{ position: 70 }]
+    RentalCharge;
+    
+    @UI.lineItem: [{ position: 80 }]
+    @UI.identification: [{ position: 80 }]
+    Rating;
+    
+    @UI.hidden: true
+    Url;
+    
+    //@UI.hidden: true
+    //ReturnDateCriticality;
+    
+    /* Muss auskommentiert sein, da es jetzt eingeblendet werden soll
+    Beim Erstellen eines neuen Verleihvorgangs soll die Währung auch ausgewählt werden können*/
+    //@UI.hidden: true
+    //CukyField;
+}

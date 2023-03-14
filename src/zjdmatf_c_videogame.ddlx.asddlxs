@@ -1,0 +1,72 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo:
+{
+  typeNamePlural: 'Videogames',
+  typeName: 'Videogame',
+  title.value: 'ItemId',
+  description.value: 'Title',
+  imageUrl: 'Url'
+}
+@UI.presentationVariant: [{sortOrder: [{ by: 'ItemId', direction: #ASC }]}] // Videogames sortiert nach Item ID anzeigen lassen
+annotate view ZJDMATF_C_Videogame with
+{
+
+  /* Facets */
+  @UI.facet:
+  [
+    { position: 10, type: #IDENTIFICATION_REFERENCE, label: 'Videogame Details' },
+    { position: 20, type: #LINEITEM_REFERENCE, label: 'Rentals', targetElement: '_Rentals' }
+  ]
+
+  /* Fields */
+  @UI.hidden: true
+  VideogameUuid;
+
+  @UI.lineItem: [{ position: 10 }]
+  @UI.selectionField: [{ position: 10 }]
+  @UI.identification: [{ position: 10 }]
+  ItemId;
+
+  @UI.lineItem: [{ position: 20 }]
+  @UI.selectionField: [{ position: 20 }]
+  @UI.identification: [{ position: 20 }]
+  Genre;
+
+  @UI.lineItem: [{ position: 30 }]
+  @UI.selectionField: [{ position: 30 }]
+  @UI.identification: [{ position: 30 }]
+  Title;
+
+  @UI.lineItem: [{ position: 40 }]
+  @UI.selectionField: [{ position: 40 }]
+  @UI.identification: [{ position: 40 }]
+  GameSystem;
+
+  @UI.lineItem: [{ position: 50 }]
+  @UI.selectionField: [{ position: 50 }]
+  @UI.identification: [{ position: 50 }]
+  PublishingYear;
+
+  /*@UI.lineItem: [{ position: 60 }]
+  @UI.selectionField: [{ position: 60 }]
+  @UI.identification: [{ position: 60 }]
+  AverageRating;*/
+  
+  @UI.lineItem: [{ position: 60 }]
+  @UI.selectionField: [{ position: 60 }]
+  @UI.identification: [{ position: 60 }]
+  @EndUserText.label: 'Average Rating'
+  AverageRatingCalculated;
+
+  @UI.lineItem: [{ position: 70, criticality: 'StatusCriticality'/*, criticalityRepresentation: #WITHOUT_ICON*/}]
+  @UI.selectionField: [{ position: 70 }]
+  @UI.identification: [{ position: 70 }]
+  Status;
+  
+  @UI.identification: [{ position: 80 }]
+  Url;
+
+  @UI.hidden: true
+  StatusCriticality;
+
+}

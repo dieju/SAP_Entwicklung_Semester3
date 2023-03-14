@@ -1,0 +1,76 @@
+managed implementation in class zbp_jdmatf_i_videogame unique;
+strict ( 1 );
+
+define behavior for ZJDMATF_I_Videogame alias Videogame
+persistent table ZJDMATFVIDEOGAME
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  /* CUD-Methods */
+  create;
+  update;
+  delete;
+  association _Rentals { create; }
+
+  /* Field Controls */
+  field ( readonly, numbering : managed ) VideogameUuid;
+  field ( readonly ) ItemId, AverageRatingCalculated;
+  field ( mandatory: create ) Title, PublishingYear, GameSystem, Genre, Status;
+
+  /* Actions, Validations and Determinations */
+  determination determineItemId on save { create; }
+
+  mapping for zjdmatfvideogame corresponding
+  {
+      VideogameUuid = videogame_uuid;
+      ItemId = item_id;
+      Genre = genre;
+      Title = title;
+      GameSystem = game_system;
+      PublishingYear = publishing_year;
+      AverageRatingCalculated = average_rating;
+      Status = status;
+  }
+
+}
+
+define behavior for ZJDMATF_I_Rental alias Rental
+persistent table ZJDMATFRENTAL
+lock dependent by _Videogame
+authorization dependent by _Videogame
+//etag master <field_name>
+{
+  /* CUD-Methods */
+  update;
+  delete;
+  field ( readonly ) VideogameUuid;
+  association _Videogame;
+
+  /* Actions, Validations and Determinations */
+  action return_videogame;
+
+  /* Field Controls */
+  field ( readonly, numbering : managed ) RentalUuid;
+  field ( readonly ) ProcessNumber, StartDate, ReturnDate, RentalCharge;
+  field ( mandatory: create) CustomerUuid;
+
+  /* Actions, Validations and Determinations */
+  determination determineProcessNumber on save { create; }
+  determination determineStartDate on save { create; }
+  determination determineStatus on save { create; }
+
+  /* Mapping */
+  mapping for zjdmatfrental corresponding
+  {
+      RentalUuid = rental_uuid;
+      CustomerUuid = customer_uuid;
+      VideogameUuid = videogame_uuid;
+      ProcessNumber = process_number;
+      StartDate = start_date;
+      ReturnDate = return_date;
+      RentalCharge = rental_charge;
+      CukyField = cuky_field;
+      Rating = rating;
+  }
+}

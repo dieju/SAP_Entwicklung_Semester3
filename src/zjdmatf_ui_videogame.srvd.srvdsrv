@@ -1,0 +1,6 @@
+@EndUserText.label: 'Videogame'
+define service ZJDMATF_UI_Videogame {
+  expose ZJDMATF_C_Videogame;
+  expose ZJDMATF_C_Rental;
+  expose ZJDMATF_C_RENTALCUSV;
+}

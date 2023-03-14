@@ -1,0 +1,4 @@
+@EndUserText.label: 'Customer'
+define service ZJDMATF_UI_Customer {
+  expose ZJDMATF_C_Customer;
+}

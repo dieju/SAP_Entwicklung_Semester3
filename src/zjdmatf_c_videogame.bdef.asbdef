@@ -1,0 +1,21 @@
+projection;
+strict ( 1 );
+
+define behavior for ZJDMATF_C_Videogame //alias <alias_name>
+{
+  use create;
+  use update;
+  use delete;
+
+  use association _Rentals { create; }
+}
+
+define behavior for ZJDMATF_C_Rental //alias <alias_name>
+{
+  use update;
+  use delete;
+
+  use action return_videogame;
+
+  use association _Videogame;
+}
