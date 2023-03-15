@@ -56,6 +56,12 @@
      <MSGNR>008</MSGNR>
      <TEXT>Videgame already lend - Rental is not possible</TEXT>
     </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZJDMATF_VIDEOGAME</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>Rental with ID &amp;1 is already finished</TEXT>
+    </T100>
    </T100>
   </asx:values>
  </asx:abap>

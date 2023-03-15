@@ -1,0 +1,36 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo:
+{
+  typeNamePlural: 'Kunden',
+  typeName: 'Kunde'
+}
+@UI.presentationVariant: [{sortOrder: [{ by: 'CustomerId', direction: #ASC }]}] // Videogames sortiert nach Item ID anzeigen lassen
+annotate view ZJDMATF_C_Customer with
+{
+
+  /* Facets */
+  @UI.facet:
+  [
+    { position: 10, type: #IDENTIFICATION_REFERENCE, label: 'Customer Details' }
+  ]
+
+  /* Fields */
+  @UI.hidden: true
+  CustomerUuid;
+
+  @UI.lineItem: [{ position: 10 }]
+  @UI.selectionField: [{ position: 10 }]
+  @UI.identification: [{ position: 10 }]
+  CustomerId;
+
+  @UI.lineItem: [{ position: 20 }]
+  @UI.selectionField: [{ position: 20 }]
+  @UI.identification: [{ position: 20 }]
+  Name;
+  
+  @UI.lineItem: [{ position: 30 }]
+  @UI.selectionField: [{ position: 30 }]
+  @UI.identification: [{ position: 30 }]
+  EntryDate;
+
+}

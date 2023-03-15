@@ -44,7 +44,7 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
       WITH CORRESPONDING #( keys )
       RESULT DATA(videogames)
 
-      FIELDS ( StartDate ReturnDate RentalCharge RentalStatus )
+      FIELDS ( StartDate ReturnDate RentalCharge RentalStatus ProcessNumber )
       WITH CORRESPONDING #( keys )
       RESULT rentals.
 
@@ -56,12 +56,25 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
 
      DATA(rental) = rentals[ 1 ].
 
-      IF videogame-status = 'A' OR rental-rentalstatus = 'F'.
+      IF videogame-status = 'A'.
 
         DATA(message) = NEW zcm_jdmatf_videogame(
           severity = if_abap_behv_message=>severity-error
           textid   = zcm_jdmatf_videogame=>videogame_already_returned
           item_id = videogame-ItemId
+          ).
+
+        APPEND message TO reported-%other.
+        APPEND CORRESPONDING #( videogame ) TO failed-videogame.
+        CONTINUE.
+      ENDIF.
+
+      IF rental-rentalstatus = 'F'.
+
+          message = NEW zcm_jdmatf_videogame(
+          severity = if_abap_behv_message=>severity-error
+          textid   = zcm_jdmatf_videogame=>rental_already_finished
+          process_number = rental-ProcessNumber
           ).
 
         APPEND message TO reported-%other.
@@ -161,6 +174,11 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
       SELECT SINGLE FROM ZJDMATFRental
         FIELDS MAX( Process_Number ) AS max_process_number
         INTO @DATA(max_process_number).
+
+      " Festlegen der ersten ID in der Datenbank -> erste ID dadurch 10000001
+      if max_process_number = 0.
+        max_process_number = 10000000.
+      endif.
 
       MODIFY ENTITY IN LOCAL MODE ZJDMATF_I_Rental
         UPDATE FIELDS ( ProcessNumber )
@@ -324,6 +342,11 @@ CLASS lhc_ZJDMATF_I_Videogame IMPLEMENTATION.
         FIELDS MAX( Item_Id ) AS max_item_id
         INTO @DATA(max_item_id).
 
+      " Festlegen der ersten ID in der Datenbank -> erste ID dadurch 10000001
+      if max_item_id = 0.
+        max_item_id = 10000000.
+      endif.
+
       MODIFY ENTITY IN LOCAL MODE ZJDMATF_I_Videogame
         UPDATE FIELDS ( ItemId )
         WITH VALUE #( ( %tky = videogame-%tky ItemId = max_item_id + 1 ) ).
@@ -380,7 +403,7 @@ CLASS lhc_ZJDMATF_I_Videogame IMPLEMENTATION.
     LOOP AT videogames INTO DATA(videogame).
 
         CASE videogame-Genre.
-          WHEN 'ACTION' OR 'ADVENTURE' OR 'PUZZLE' OR 'ROLE PLAY' OR 'SIMULATION' OR 'STRATEGY' OR 'SPORTS' OR 'RACING'.
+          WHEN 'Action' OR 'Adventure' OR 'Puzzle' OR 'Role Play' OR 'Simulation' OR 'Strategy' OR 'Sports' OR 'Racing'.
           WHEN OTHERS.
             DATA(message) = NEW zcm_jdmatf_videogame(
               severity = if_abap_behv_message=>severity-error

@@ -30,17 +30,17 @@ annotate view ZJDMATF_C_Videogame with
   @UI.lineItem: [{ position: 20 }]
   @UI.selectionField: [{ position: 20 }]
   @UI.identification: [{ position: 20 }]
-  Genre;
+  Title;
 
   @UI.lineItem: [{ position: 30 }]
   @UI.selectionField: [{ position: 30 }]
   @UI.identification: [{ position: 30 }]
-  Title;
-
+  GameSystem;
+  
   @UI.lineItem: [{ position: 40 }]
   @UI.selectionField: [{ position: 40 }]
   @UI.identification: [{ position: 40 }]
-  GameSystem;
+  Genre;
 
   @UI.lineItem: [{ position: 50 }]
   @UI.selectionField: [{ position: 50 }]

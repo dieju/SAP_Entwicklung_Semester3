@@ -22,6 +22,16 @@ INHERITING FROM cx_static_check
         attr4 TYPE scx_attrname VALUE '',
       END OF videogame_already_returned.
 
+      CONSTANTS:
+      BEGIN OF rental_already_finished,
+        msgid TYPE symsgid VALUE 'ZJDMATF_VIDEOGAME',
+        msgno TYPE symsgno VALUE '009',
+        attr1 TYPE scx_attrname VALUE 'PROCESS_NUMBER',
+        attr2 TYPE scx_attrname VALUE '',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF rental_already_finished.
+
     CONSTANTS:
       BEGIN OF game_successfully_returned,
         msgid TYPE symsgid VALUE 'ZJDMATF_VIDEOGAME',
@@ -98,6 +108,7 @@ INHERITING FROM cx_static_check
     DATA genre TYPE zjdmatf_genre.
     DATA game_system TYPE zjdmatf_game_system.
     DATA rating TYPE zjdmatf_rating.
+    DATA process_number TYPE zjdmatf_process_number.
 
     "Constructor
     METHODS constructor
@@ -109,7 +120,8 @@ INHERITING FROM cx_static_check
         publishing_year TYPE zjdmatf_publishing_year OPTIONAL
         genre TYPE zjdmatf_genre OPTIONAL
         game_system TYPE zjdmatf_game_system OPTIONAL
-        rating TYPE zjdmatf_rating OPTIONAL.
+        rating TYPE zjdmatf_rating OPTIONAL
+        process_number TYPE zjdmatf_process_number OPTIONAL.
 
   PROTECTED SECTION.
 
@@ -133,5 +145,6 @@ CLASS zcm_jdmatf_videogame IMPLEMENTATION.
     me->genre = genre.
     me->game_system = game_system.
     me->rating = rating.
+    me->process_number = process_number.
   ENDMETHOD.
 ENDCLASS.

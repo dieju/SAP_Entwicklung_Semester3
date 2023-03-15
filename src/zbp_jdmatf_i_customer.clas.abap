@@ -1,0 +1,5 @@
+CLASS zbp_jdmatf_i_customer DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zjdmatf_i_customer.
+ENDCLASS.
+
+CLASS zbp_jdmatf_i_customer IMPLEMENTATION.
+ENDCLASS.

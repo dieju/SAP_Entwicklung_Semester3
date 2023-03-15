@@ -6,7 +6,7 @@
   title.value: 'ProcessNumber'
   //description.value: 'ProcessNumber'
 }
-@UI.presentationVariant: [{sortOrder: [{ by: 'ReturnDate', direction: #DESC }]}] // absteigend sortiert nach ReturnDate
+@UI.presentationVariant: [{sortOrder: [{ by: 'ReturnDate', direction: #ASC }]}] // absteigend sortiert nach ReturnDate
 annotate view ZJDMATF_C_Rental
     with 
 {

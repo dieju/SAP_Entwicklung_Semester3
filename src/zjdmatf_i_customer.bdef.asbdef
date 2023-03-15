@@ -1,0 +1,29 @@
+managed implementation in class zbp_jdmatf_i_customer unique;
+strict ( 1 );
+
+define behavior for ZJDMATF_I_Customer //alias <alias_name>
+persistent table zjdmatfcustomer
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  /* CUD-Methods */
+  create;
+  update;
+  delete;
+
+  /* Field Controls */
+  field ( readonly, numbering : managed ) CustomerUuid;
+  field ( readonly ) CustomerId;
+
+  /* Actions, Validations and Determinations */
+  determination determineCustomerId on save { create; }
+
+  mapping for zjdmatfcustomer corresponding
+  {
+      CustomerUuid = customer_uuid;
+      CustomerId = customer_id;
+      EntryDate = entry_date;
+  }
+
+}
