@@ -20,56 +20,56 @@
      <VALPOS>0001</VALPOS>
      <DDLANGUAGE>E</DDLANGUAGE>
      <DOMVALUE_L>Action</DOMVALUE_L>
-     <DDTEXT>Geschicklichkeit und Reaktionsschnelligkeit des Spielers</DDTEXT>
+     <DDTEXT>Skill and speed of the player</DDTEXT>
     </DD07V>
     <DD07V>
      <DOMNAME>ZJDMATF_GENRE</DOMNAME>
      <VALPOS>0002</VALPOS>
      <DDLANGUAGE>E</DDLANGUAGE>
      <DOMVALUE_L>Adventure</DOMVALUE_L>
-     <DDTEXT>Adventure</DDTEXT>
+     <DDTEXT>Reconstruct a story and solve various puzzles in it</DDTEXT>
     </DD07V>
     <DD07V>
      <DOMNAME>ZJDMATF_GENRE</DOMNAME>
      <VALPOS>0003</VALPOS>
      <DDLANGUAGE>E</DDLANGUAGE>
      <DOMVALUE_L>Puzzle</DOMVALUE_L>
-     <DDTEXT>Puzzle</DDTEXT>
+     <DDTEXT>Patience game in which you solve various puzzles</DDTEXT>
     </DD07V>
     <DD07V>
      <DOMNAME>ZJDMATF_GENRE</DOMNAME>
      <VALPOS>0004</VALPOS>
      <DDLANGUAGE>E</DDLANGUAGE>
      <DOMVALUE_L>Role Play</DOMVALUE_L>
-     <DDTEXT>Role Playing</DDTEXT>
+     <DDTEXT>Players take on roles of fictional or real people</DDTEXT>
     </DD07V>
     <DD07V>
      <DOMNAME>ZJDMATF_GENRE</DOMNAME>
      <VALPOS>0005</VALPOS>
      <DDLANGUAGE>E</DDLANGUAGE>
      <DOMVALUE_L>Simulation</DOMVALUE_L>
-     <DDTEXT>Simulation</DDTEXT>
+     <DDTEXT>Real process is simulated in a game</DDTEXT>
     </DD07V>
     <DD07V>
      <DOMNAME>ZJDMATF_GENRE</DOMNAME>
      <VALPOS>0006</VALPOS>
      <DDLANGUAGE>E</DDLANGUAGE>
      <DOMVALUE_L>Strategy</DOMVALUE_L>
-     <DDTEXT>Strategy</DDTEXT>
+     <DDTEXT>Turn-based tactical game, where long-term planning is necess</DDTEXT>
     </DD07V>
     <DD07V>
      <DOMNAME>ZJDMATF_GENRE</DOMNAME>
      <VALPOS>0007</VALPOS>
      <DDLANGUAGE>E</DDLANGUAGE>
      <DOMVALUE_L>Sports</DOMVALUE_L>
-     <DDTEXT>Sports</DDTEXT>
+     <DDTEXT>One or more players virtually practice a sport</DDTEXT>
     </DD07V>
     <DD07V>
      <DOMNAME>ZJDMATF_GENRE</DOMNAME>
      <VALPOS>0008</VALPOS>
      <DDLANGUAGE>E</DDLANGUAGE>
      <DOMVALUE_L>Racing</DOMVALUE_L>
-     <DDTEXT>Racing</DDTEXT>
+     <DDTEXT>A predefined route with a vehicle or other means of transpor</DDTEXT>
     </DD07V>
    </DD07V_TAB>
   </asx:values>

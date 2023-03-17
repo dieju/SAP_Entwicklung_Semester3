@@ -21,9 +21,6 @@ define view entity ZJDMATF_C_RENTALCUSV
       _Videogame.Url,
      
       /* Transient Data */
-      //ReturnDateCriticality,
       CustomerName
       
-      /* Associations */
-      //_Videogame : redirected to parent ZJDMATF_C_Videogame
 }

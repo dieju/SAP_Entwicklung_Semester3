@@ -62,10 +62,9 @@ authorization dependent by _Videogame
   /* Actions, Validations and Determinations */
   determination determineProcessNumber on save { create; }
   determination determineStartDate on save { create; }
-  determination determineStatus on save { create; }
+  determination determineStatus on save { create; } // + Prüfung, ob Videogame erstellt werden kann (wenn Status = 'L', dann nicht möglich)
   determination determineRating on save { create; }
   validation validateRating on save { create; update; field Rating; }
-  validation validateRentalRequest on save { create; }
 
 
   /* Mapping */

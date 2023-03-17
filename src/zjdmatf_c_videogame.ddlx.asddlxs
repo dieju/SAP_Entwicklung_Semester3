@@ -7,7 +7,7 @@
   description.value: 'Title',
   imageUrl: 'Url'
 }
-@UI.presentationVariant: [{sortOrder: [{ by: 'ItemId', direction: #ASC }]}] // Videogames sortiert nach Item ID anzeigen lassen
+@UI.presentationVariant: [{sortOrder: [{ by: 'ItemId', direction: #ASC }]}] // Videogames aufsteigend sortiert nach Item ID anzeigen lassen
 annotate view ZJDMATF_C_Videogame with
 {
 
@@ -53,7 +53,7 @@ annotate view ZJDMATF_C_Videogame with
   @EndUserText.label: 'Average Rating'
   AverageRatingCalculated;
 
-  @UI.lineItem: [{ position: 70, criticality: 'StatusCriticality'/*, criticalityRepresentation: #WITHOUT_ICON*/}]
+  @UI.lineItem: [{ position: 70, criticality: 'StatusCriticality'}]
   @UI.selectionField: [{ position: 70 }]
   @UI.identification: [{ position: 70 }]
   Status;

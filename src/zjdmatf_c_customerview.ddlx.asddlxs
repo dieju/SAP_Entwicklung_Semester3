@@ -1,10 +1,14 @@
+/*
+    ZJDMATF_C_CUSTOMER war ursprünglich als Metadata Extensions gedacht. Da diese aber nicht funktioniert und wir diese nicht löschen können,
+    haben wir diese Metadata Extension erstellt
+*/
 @Metadata.layer: #CUSTOMER
 @UI.headerInfo:
 {
   typeNamePlural: 'Kunden',
   typeName: 'Kunde'
 }
-@UI.presentationVariant: [{sortOrder: [{ by: 'CustomerId', direction: #ASC }]}] // Videogames sortiert nach Item ID anzeigen lassen
+@UI.presentationVariant: [{sortOrder: [{ by: 'CustomerId', direction: #ASC }]}] // Videogames aufsteigend sortiert nach Item ID anzeigen lassen
 annotate view ZJDMATF_C_Customer with
 {
 

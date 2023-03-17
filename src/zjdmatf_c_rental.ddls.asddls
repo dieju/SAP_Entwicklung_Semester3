@@ -18,7 +18,6 @@ define view entity ZJDMATF_C_Rental
       Rating,
       @Consumption.valueHelpDefinition: [{ entity: { name: 'ZJDMATF_I_RENTALSTATUSVH', element: 'RentalStatus' } }]
       RentalStatus,
-      //_Videogame.ItemId,
       
       /* Transient Data */
       RentalStatusCriticality,

@@ -28,12 +28,14 @@ CLASS ZCL_JDMATF_RENTAL_GENERATOR IMPLEMENTATION.
   DATA rentals TYPE TABLE OF zjdmatfrental.
 
   "Alle Daten der Datenbanktabellen löschen
-    DELETE FROM zjdmatfcustomer.
-    out->write( |deleteted customer: {  sy-dbcnt }| ).
-    DELETE FROM zjdmatfvideogame.
-    out->write( |deleteted videgame: {  sy-dbcnt }| ).
-    DELETE FROM zjdmatfrental.
-    out->write( |deleteted rental: {  sy-dbcnt }| ).
+
+  "lieber mal auskommentiert -> wird diese Klasse ausgeführt sind sonst alle über die Oberfläche eingefügten Datensätze weg!
+    "DELETE FROM zjdmatfcustomer.
+    "out->write( |deleteted customer: {  sy-dbcnt }| ).
+    "DELETE FROM zjdmatfvideogame.
+    "out->write( |deleteted videgame: {  sy-dbcnt }| ).
+    "DELETE FROM zjdmatfrental.
+    "out->write( |deleteted rental: {  sy-dbcnt }| ).
 
   "Interne Tabellen befüllen
     "Struktur befüllen (1) -> customer and videogame
@@ -51,7 +53,7 @@ CLASS ZCL_JDMATF_RENTAL_GENERATOR IMPLEMENTATION.
   videogame-title = 'Ratchet & Clank'.
   videogame-game_system = 'PS4'.
   videogame-publishing_year = '2016'.
-  videogame-average_rating = '4'.
+  "videogame-average_rating = '4'.
   videogame-status = 'l'. " = lent / andere Möglichkeit: a = available
   APPEND videogame TO videogames.
 
@@ -83,7 +85,7 @@ CLASS ZCL_JDMATF_RENTAL_GENERATOR IMPLEMENTATION.
   videogame-title = 'FIFA 23'.
   videogame-game_system = 'PS5'.
   videogame-publishing_year = '2022'.
-  videogame-average_rating = '1'.
+  "videogame-average_rating = '1'.
   videogame-status = 'l'. " = lent / andere Möglichkeit: a = available
   APPEND videogame TO videogames.
 
@@ -95,7 +97,7 @@ CLASS ZCL_JDMATF_RENTAL_GENERATOR IMPLEMENTATION.
   rental-process_number = '00000002'.
   rental-start_date = '20230125'.
   rental-return_date = '20230128'.
-  rental-rental_charge = '20'. " 4 Tage * 5€ (fester Wert Bsp.)
+  rental-rental_charge = '20'.
   rental-cuky_field = 'EUR'.
   APPEND rental TO rentals.
 
@@ -115,7 +117,7 @@ CLASS ZCL_JDMATF_RENTAL_GENERATOR IMPLEMENTATION.
   videogame-title = 'Fifa 22'.
   videogame-game_system = 'PS4'.
   videogame-publishing_year = '2021'.
-  videogame-average_rating = '1'.
+  "videogame-average_rating = '1'.
   videogame-status = 'a'. " = lent / andere Möglichkeit: a = available
   APPEND videogame TO videogames.
 

@@ -26,9 +26,9 @@ CLASS lhc_ZJDMATF_I_Customer IMPLEMENTATION.
         FIELDS MAX( Customer_Id ) AS max_customer_id
         INTO @DATA(max_customer_id).
 
-      " Festlegen der ersten ID in der Datenbank -> erste ID dadurch 10000001
+      " Festlegen der ersten ID in der Datenbank -> erste ID dadurch 50000001
       if max_customer_id = 0.
-        max_customer_id = 10000000.
+        max_customer_id = 50000000.
       endif.
 
       MODIFY ENTITY IN LOCAL MODE ZJDMATF_I_Customer

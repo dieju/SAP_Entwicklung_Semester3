@@ -5,7 +5,6 @@
   typeNamePlural: 'Rentals',
   title.value: 'ProcessNumber',
   imageUrl: 'Url'
-//  description.value: 'ProcessNumber'
 }
 @UI.presentationVariant: [{sortOrder: [{ by: 'ReturnDate', direction: #DESC }]}] // absteigend sortiert nach ReturnDate
 annotate view ZJDMATF_C_RENTALCUSV
@@ -65,12 +64,4 @@ annotate view ZJDMATF_C_RENTALCUSV
     
     @UI.hidden: true
     Url;
-    
-    //@UI.hidden: true
-    //ReturnDateCriticality;
-    
-    /* Muss auskommentiert sein, da es jetzt eingeblendet werden soll
-    Beim Erstellen eines neuen Verleihvorgangs soll die Währung auch ausgewählt werden können*/
-    //@UI.hidden: true
-    //CukyField;
 }

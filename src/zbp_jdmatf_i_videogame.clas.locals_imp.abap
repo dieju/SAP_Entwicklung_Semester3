@@ -20,8 +20,6 @@ CLASS lhc_zjdmatf_i_rental DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys FOR Rental~validateRating.
     METHODS determineRating FOR DETERMINE ON SAVE
       IMPORTING keys FOR Rental~determineRating.
-    METHODS validateRentalRequest FOR VALIDATE ON SAVE
-      IMPORTING keys FOR Rental~validateRentalRequest.
 
 ENDCLASS.
 
@@ -35,7 +33,6 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
 
     "Deklarationen
     DATA rentals TYPE TABLE FOR READ RESULT ZJDMATF_I_Rental.
-    "DATA: item_id TYPE zjdmatf_item_id.
 
     "Lesen der Daten
     READ ENTITY IN LOCAL MODE ZJDMATF_I_Rental
@@ -48,14 +45,11 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
       WITH CORRESPONDING #( keys )
       RESULT rentals.
 
-    "Sequentielle Verarbeitung der Buchungsdaten
-    "Bei Validierungen: Fehlerfälle abfangen und Fehlermeldungen erzeugen
-    "Bei Ermittlungen: Daten ermitteln und Daten zurückschreiben
-    "Bei Actions: sowohl als auch
     LOOP AT videogames INTO DATA(videogame).
 
      DATA(rental) = rentals[ 1 ].
 
+      " Fehler ausgeben, wenn der Status des Videogames available ist:
       IF videogame-status = 'A'.
 
         DATA(message) = NEW zcm_jdmatf_videogame(
@@ -69,6 +63,7 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
         CONTINUE.
       ENDIF.
 
+      " Fehler ausgeben, wenn der gewählte Verleihvorgang bereits beendet ist
       IF rental-rentalstatus = 'F'.
 
           message = NEW zcm_jdmatf_videogame(
@@ -82,10 +77,12 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
         CONTINUE.
       ENDIF.
 
+      " Videogame Status auf available setzen, falls keine der oberen Fehlermöglichkeiten zutrifft -> Videospiel wurde erfolgreich zurückgegeben
       MODIFY ENTITY IN LOCAL MODE ZJDMATF_I_Videogame
         UPDATE FIELDS ( Status )
         WITH VALUE #( ( %tky = videogame-%tky Status = 'A' ) ).
 
+      " Erfolgsmeldung ausgeben
       message = NEW zcm_jdmatf_videogame(
         severity = if_abap_behv_message=>severity-success
         textid   = zcm_jdmatf_videogame=>game_successfully_returned
@@ -94,19 +91,14 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
 
       APPEND message TO reported-%other.
 
-      "DATA(rental) = rentals[ 1 ].
+      " Read-Only Felder befüllen:
 
+      " Return-Date automatisch auf heutigen Tag setzen
       MODIFY ENTITY IN LOCAL MODE ZJDMATF_I_Rental
         UPDATE FIELDS ( ReturnDate )
         WITH VALUE #( ( %tky = rental-%tky ReturnDate =  sy-datum ) ).
 
-      " Rental Status setzen
-      MODIFY ENTITY IN LOCAL MODE ZJDMATF_I_Rental
-        UPDATE FIELDS ( RentalStatus )
-        WITH VALUE #( ( %tky = rental-%tky RentalStatus =  'F' ) ).
-
-      " -----------------------
-
+      " Preis des Verleihvorgangs je nach System festlegen
       READ ENTITY IN LOCAL MODE ZJDMATF_I_Rental
         BY \_Videogame
         FIELDS ( GameSystem )
@@ -144,21 +136,27 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
               when 'NS'. SystemPrice = HighestPrice.
               "Computer
               when 'PC'. SystemPrice = HighestPrice.
-              when others. " evtl. Fehlermeldung
+              when others.
             endcase.
 
         MODIFY ENTITY IN LOCAL MODE ZJDMATF_I_Rental
         UPDATE FIELDS ( RentalCharge )
-        " +2 protects against fraud - it is not possible to lend a videogame for one day without paying
-        WITH VALUE #( ( %tky = rental-%tky RentalCharge = systemPrice * ( sy-datum - Rental-StartDate ) + 2 ) ). " Anstatt aktuellem Datum hier ReturnDate nehmen? Wurde oben ja schon mit Wert befüllt
+        " 2€ Startgebühr zuzüglich Leihgebühr pro Tag je nach System (siehe oben)
+        WITH VALUE #( ( %tky = rental-%tky RentalCharge = systemPrice * ( sy-datum - Rental-StartDate ) + 2 ) ).
 
       ENDLOOP.
 
+        " EUR in das Währungsfeld eintragen
         MODIFY ENTITY IN LOCAL MODE ZJDMATF_I_Rental
         UPDATE FIELDS ( CukyField )
         WITH VALUE #( ( %tky = rental-%tky CukyField =  'EUR' ) ).
 
     ENDLOOP.
+
+      " Rental Status auf abgeschlossen setzen
+      MODIFY ENTITY IN LOCAL MODE ZJDMATF_I_Rental
+        UPDATE FIELDS ( RentalStatus )
+        WITH VALUE #( ( %tky = rental-%tky RentalStatus =  'F' ) ).
 
   ENDMETHOD.
 
@@ -175,9 +173,9 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
         FIELDS MAX( Process_Number ) AS max_process_number
         INTO @DATA(max_process_number).
 
-      " Festlegen der ersten ID in der Datenbank -> erste ID dadurch 10000001
+      " Festlegen der ersten ID in der Datenbank -> erste ID dadurch 30000001
       if max_process_number = 0.
-        max_process_number = 10000000.
+        max_process_number = 30000000.
       endif.
 
       MODIFY ENTITY IN LOCAL MODE ZJDMATF_I_Rental
@@ -197,6 +195,7 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
 
     LOOP AT rentals INTO DATA(rental).
 
+      " StartDate auf heutigen Tag setzen
       MODIFY ENTITY IN LOCAL MODE ZJDMATF_I_Rental
         UPDATE FIELDS ( StartDate )
         WITH VALUE #( ( %tky = rental-%tky StartDate = sy-datum ) ).
@@ -207,7 +206,6 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
 
   METHOD determinestatus.
 
-    " Videogame Status
     READ ENTITY IN LOCAL MODE ZJDMATF_I_Rental
      BY \_Videogame
      FIELDS ( Status )
@@ -216,23 +214,23 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
 
     LOOP AT videogames INTO DATA(videogame).
 
+      " Validierung: Wenn das Videogame bereits ausgeliehen ist, soll das das Ausleihen nicht mehr möglich sein
       IF videogame-Status = 'L'.
         DATA(message) = NEW zcm_jdmatf_videogame(
           severity = if_abap_behv_message=>severity-error
           textid   = zcm_jdmatf_videogame=>bad_rental_request ).
 
         APPEND message TO reported-%other.
-        "APPEND CORRESPONDING #( videogame ) TO failed-videogame.
         CONTINUE.
       ENDIF.
 
+      " Nach dem Erstellen eines Verleihvorgangs Status auf ausgeliehen setzen
       MODIFY ENTITY IN LOCAL MODE ZJDMATF_I_Videogame
         UPDATE FIELDS ( Status )
         WITH VALUE #( ( %tky = videogame-%tky Status = 'L' ) ).
 
     ENDLOOP.
 
-    " Rental Status
     READ ENTITY IN LOCAL MODE ZJDMATF_I_Rental
      FIELDS ( RentalStatus )
      WITH CORRESPONDING #( keys )
@@ -240,6 +238,7 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
 
     LOOP AT rentals INTO DATA(rental).
 
+      " Rental Status auf aktiv setzen, nachdem ein neuer Verleihvorgang angelegt wurde
       MODIFY ENTITY IN LOCAL MODE ZJDMATF_I_Rental
         UPDATE FIELDS ( RentalStatus )
         WITH VALUE #( ( %tky = rental-%tky RentalStatus = 'A' ) ).
@@ -250,16 +249,14 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
 
   METHOD validateRating.
 
-    "Lesen der Daten
     READ ENTITY IN LOCAL MODE ZJDMATF_I_Rental
       FIELDS ( Rating )
       WITH CORRESPONDING #( keys )
       RESULT DATA(rentals).
 
-    "Sequentielle Verarbeitung der Daten
     LOOP AT rentals INTO DATA(rental).
 
-      "Fehlerfall abfangen und Fehlermedlung erzeugen
+      "Nur Felder aus der Wertehilfe erlauben
       IF ( rental-Rating <> 'X' ) AND ( rental-Rating < '1' OR rental-Rating > '5' ) .
         DATA(message) = NEW zcm_jdmatf_videogame(
           severity = if_abap_behv_message=>severity-error
@@ -284,6 +281,7 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
 
     LOOP AT rentals INTO DATA(rental).
 
+     "Rating beim Anlegen eines Verleihvorgangs immer auf X (not rated) setzen -> nur nachträglich kann ein anderes Rating gesetzt werden
       MODIFY ENTITY IN LOCAL MODE ZJDMATF_I_Rental
         UPDATE FIELDS ( Rating )
         WITH VALUE #( ( %tky = rental-%tky Rating = 'X' ) ).
@@ -292,19 +290,9 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD validateRentalRequest.
-
-    READ ENTITY IN LOCAL MODE ZJDMATF_I_Rental
-     BY \_Videogame
-     FIELDS ( Status )
-     WITH CORRESPONDING #( keys )
-     RESULT DATA(videogames).
-
-
-
-  ENDMETHOD.
-
 ENDCLASS.
+
+" ----------------------------------------------------------------------------------
 
 CLASS lhc_ZJDMATF_I_Videogame DEFINITION INHERITING FROM cl_abap_behavior_handler.
   PRIVATE SECTION.
@@ -357,16 +345,14 @@ CLASS lhc_ZJDMATF_I_Videogame IMPLEMENTATION.
 
   METHOD validatePublishingYear.
 
-    "Lesen der Daten
     READ ENTITY IN LOCAL MODE ZJDMATF_I_Videogame
       FIELDS ( PublishingYear )
       WITH CORRESPONDING #( keys )
       RESULT DATA(videogames).
 
-    "Sequentielle Verarbeitung der Daten
     LOOP AT videogames INTO DATA(videogame).
 
-      "Fehlerfall abfangen und Fehlermedlung erzeugen
+      " Nur Jahre zwischen 1960 und aktuellem Jahr sollen erlaubt sein
       IF videogame-PublishingYear < 1960 OR videogame-PublishingYear > sy-datum(4).
         DATA(message) = NEW zcm_jdmatf_videogame(
           severity = if_abap_behv_message=>severity-error
@@ -384,24 +370,14 @@ CLASS lhc_ZJDMATF_I_Videogame IMPLEMENTATION.
 
   METHOD validateGenre.
 
-  "DATA: genre_values TYPE STANDARD TABLE OF dd07v_wa,
-  "    genre_values  LIKE LINE OF genre_values.
-
-   " CALL FUNCTION 'DD_DOMVALUES_GET'
-    "EXPORTING
-    "    domain_name = 'ZJDMATF_GENRE'
-    "TABLES
-       " dd07v_tab   = genre_values.
-
-    "Lesen der Daten
     READ ENTITY IN LOCAL MODE ZJDMATF_I_Videogame
       FIELDS ( Genre )
       WITH CORRESPONDING #( keys )
       RESULT DATA(videogames).
 
-    "Sequentielle Verarbeitung der Daten
     LOOP AT videogames INTO DATA(videogame).
 
+        " Nur Felder aus der Wertehilfe erlauben
         CASE videogame-Genre.
           WHEN 'Action' OR 'Adventure' OR 'Puzzle' OR 'Role Play' OR 'Simulation' OR 'Strategy' OR 'Sports' OR 'Racing'.
           WHEN OTHERS.
@@ -428,6 +404,7 @@ CLASS lhc_ZJDMATF_I_Videogame IMPLEMENTATION.
 
     LOOP AT videogames INTO DATA(videogame).
 
+      " Beim Erstellen eiens Videogames den Status auf available setzen
       MODIFY ENTITY IN LOCAL MODE ZJDMATF_I_Videogame
         UPDATE FIELDS ( Status )
         WITH VALUE #( ( %tky = videogame-%tky Status = 'A' ) ).
@@ -438,15 +415,14 @@ CLASS lhc_ZJDMATF_I_Videogame IMPLEMENTATION.
 
   METHOD validateGameSystem.
 
-    "Lesen der Daten
     READ ENTITY IN LOCAL MODE ZJDMATF_I_Videogame
       FIELDS ( GameSystem )
       WITH CORRESPONDING #( keys )
       RESULT DATA(videogames).
 
-    "Sequentielle Verarbeitung der Daten
     LOOP AT videogames INTO DATA(videogame).
 
+        " Nur Felder aus der Wertehilfe erlauben
         CASE videogame-GameSystem.
           WHEN 'PS2' OR 'DS' OR 'GB' OR 'PS4' OR 'NS' OR 'PSX' OR 'WII' OR 'PS3' OR 'X360' OR 'GBA' OR 'PSP' OR 'TDS' OR 'NES' OR 'XONE' OR 'SNES' OR 'PS5' OR 'XBSX' OR 'PC'.
           WHEN OTHERS.

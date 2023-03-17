@@ -4,9 +4,8 @@
   typeNamePlural: 'Rentals',
   typeName: 'Rental',
   title.value: 'ProcessNumber'
-  //description.value: 'ProcessNumber'
 }
-@UI.presentationVariant: [{sortOrder: [{ by: 'ReturnDate', direction: #ASC }]}] // absteigend sortiert nach ReturnDate
+@UI.presentationVariant: [{sortOrder: [{ by: 'ReturnDate', direction: #ASC }]}] // aufsteigend sortiert nach ReturnDate
 annotate view ZJDMATF_C_Rental
     with 
 {
@@ -50,7 +49,7 @@ annotate view ZJDMATF_C_Rental
     @UI.identification: [{ position: 50 }]
     RentalCharge;
     
-    @UI.lineItem: [{ position: 60, criticality: 'RentalStatusCriticality'}] // , criticalityRepresentation: #WITHOUT_ICON
+    @UI.lineItem: [{ position: 60, criticality: 'RentalStatusCriticality'}]
     @UI.identification: [{ position: 60 }]
     RentalStatus;
     

@@ -11,11 +11,11 @@ INHERITING FROM cx_static_check
     INTERFACES if_t100_message.
     INTERFACES if_t100_dyn_msg.
 
-    " glaub erledigt: TODO: Define Message Constants
+    " Message Constants
     CONSTANTS:
       BEGIN OF videogame_already_returned,
-        msgid TYPE symsgid VALUE 'ZJDMATF_VIDEOGAME', " Nachrichten-Klasse angeben
-        msgno TYPE symsgno VALUE '001', " Auswahl der Nachricht
+        msgid TYPE symsgid VALUE 'ZJDMATF_VIDEOGAME', " Nachrichten-Klasse
+        msgno TYPE symsgno VALUE '001', " Nummer der Nachricht
         attr1 TYPE scx_attrname VALUE 'ITEM_ID',
         attr2 TYPE scx_attrname VALUE '',
         attr3 TYPE scx_attrname VALUE '',
@@ -102,7 +102,7 @@ INHERITING FROM cx_static_check
         attr4 TYPE scx_attrname VALUE '',
       END OF bad_rental_request.
 
-    " erledigt: TODO: Define Attributs
+    " Attributs
     DATA item_id TYPE zjdmatf_item_id.
     DATA publishing_year TYPE zjdmatf_publishing_year.
     DATA genre TYPE zjdmatf_genre.
@@ -130,7 +130,6 @@ INHERITING FROM cx_static_check
 ENDCLASS.
 
 
-
 CLASS zcm_jdmatf_videogame IMPLEMENTATION.
 
   METHOD constructor ##ADT_SUPPRESS_GENERATION.
@@ -139,7 +138,7 @@ CLASS zcm_jdmatf_videogame IMPLEMENTATION.
     if_t100_message~t100key = textid.
     me->if_abap_behv_message~m_severity = severity.
 
-    " erledigt TODO: Set Attributs
+    " set Attributs
     me->item_id = item_id.
     me->publishing_year = publishing_year.
     me->genre = genre.

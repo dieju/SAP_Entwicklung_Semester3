@@ -11,7 +11,7 @@ define root view entity ZJDMATF_C_Videogame
       @Consumption.valueHelpDefinition: [{ entity: { name: 'ZJDMATF_I_GENREVH', element: 'Genre' } }]
       Genre,
       @Search.defaultSearchElement: true
-      @Search.fuzzinessThreshold: 0.8
+      @Search.fuzzinessThreshold: 0.7
       Title,
       @Consumption.valueHelpDefinition: [{ entity: { name: 'ZJDMATF_I_SYSTEMVH', element: 'GameSystem' } }]
       GameSystem,
