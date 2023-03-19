@@ -5,6 +5,9 @@ CLASS lhc_zjdmatf_i_rental DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
       IMPORTING keys REQUEST requested_authorizations FOR Rental RESULT result.
 
+    METHODS get_instance_features FOR INSTANCE FEATURES
+      IMPORTING keys REQUEST requested_features FOR Rental RESULT result.
+
     METHODS determineProcessNumber FOR DETERMINE ON SAVE
       IMPORTING keys FOR rental~determineProcessNumber.
 
@@ -28,6 +31,20 @@ CLASS lhc_zjdmatf_i_rental IMPLEMENTATION.
   METHOD get_instance_authorizations.
   ENDMETHOD.
 
+  METHOD get_instance_features.
+
+    READ ENTITY IN LOCAL MODE ZJDMATF_I_Rental
+       FIELDS ( RentalStatus )
+       WITH CORRESPONDING #( keys )
+       RESULT DATA(rentals).
+
+    result = VALUE #( FOR rental IN rentals
+                  ( %tky                  = rental-%tky
+                    %delete               = COND #( WHEN rental-RentalStatus = 'A'
+                                                    THEN if_abap_behv=>fc-o-disabled
+                                                    ELSE if_abap_behv=>fc-o-enabled )
+                  ) ).
+  ENDMETHOD.
 
   METHOD return_videogame.
 
@@ -299,6 +316,8 @@ CLASS lhc_ZJDMATF_I_Videogame DEFINITION INHERITING FROM cl_abap_behavior_handle
 
     METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
       IMPORTING keys REQUEST requested_authorizations FOR Videogame RESULT result. " Alias Videogame verwendet (hat Daniel nicht)
+    METHODS get_instance_features FOR INSTANCE FEATURES
+      IMPORTING keys REQUEST requested_features FOR Videogame RESULT result.
     METHODS determineitemid FOR DETERMINE ON SAVE
       IMPORTING keys FOR videogame~determineitemid.
     METHODS validatepublishingyear FOR VALIDATE ON SAVE
@@ -315,6 +334,22 @@ ENDCLASS.
 CLASS lhc_ZJDMATF_I_Videogame IMPLEMENTATION.
 
   METHOD get_instance_authorizations.
+  ENDMETHOD.
+
+  METHOD get_instance_features.
+
+    READ ENTITY IN LOCAL MODE ZJDMATF_I_Videogame
+         FIELDS ( Status )
+         WITH CORRESPONDING #( keys )
+         RESULT DATA(videogames).
+
+    result = VALUE #( FOR videogame IN videogames
+                  ( %tky                  = videogame-%tky
+                    %delete               = COND #( WHEN videogame-Status = 'L'
+                                                    THEN if_abap_behv=>fc-o-disabled
+                                                    ELSE if_abap_behv=>fc-o-enabled )
+                  ) ).
+
   ENDMETHOD.
 
   METHOD determineitemid.

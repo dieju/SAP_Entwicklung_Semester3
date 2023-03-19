@@ -10,7 +10,7 @@ authorization master ( instance )
   /* CUD-Methods */
   create;
   update;
-  delete;
+  delete ( features : instance );
   association _Rentals { create; }
 
   /* Field Controls */
@@ -46,7 +46,7 @@ authorization dependent by _Videogame
 {
   /* CUD-Methods */
   update;
-  delete;
+  delete ( features : instance );
   field ( readonly ) VideogameUuid;
   association _Videogame;
 
